@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        header ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        header ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        header ul li a:hover {
+            background: lightgray;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            color: black;
+        }
+
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        select, input[type="submit"], a.button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px; 
+        }
+
+        input[type="submit"], a.button {
+            color: white;
+            background-color: #333;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover, a.button:hover {
+            background-color: #555;
+        }
+
+        div {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 60%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Compare</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </header>
+    <form action="/compare" method="post">
+        <select name="sectors" id="sectors" required>
+            <option value="" disabled selected>Select a sector</option>
+            <option value="Financial">Financial</option>
+            <option value="Tech">Tech</option>
+            <option value="Communication_services">Communication services</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Energy">Energy</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Consumer_Cyclical">Consumer Cyclical</option>
+            <option value="Industrials">Industrials</option>
+            <option value="Real_Estate">Real Estate</option>
+            <option value="Consumer_Defensive">Consumer Defensive</option>
+            <option value="Basic_Materials">Basic Materials</option>
+        </select>
+
+        <select name="options" id="options" required>
+            <option value="Revenue">Revenue</option>
+            <option value="Operating Income">Operating Income</option>
+            <option value="Net Income">Net Income</option>
+            <option value="Earnings Per Share">Earnings per Share</option>
+            <option value="Profit">Profit</option>
+        </select>
+
+        <input type="submit" value="Compare">
+    </form>
+    <div>
+        <h2>Results for <strong>{{ sector }}</strong> - <strong>{{ option }}</strong>:</h2>
+        {% if results %}
+        <table>
+            <tr>
+                <th>Company</th>
+                <th>$$$</th>
+            </tr>
+            {% for symbol, value in results %}
+            <tr>
+                <td>{{ symbol }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var isInIframe = window.location !== window.parent.location;
+
+    document.querySelectorAll('a[href="/"], a[href*="home"]').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            if (isInIframe) {
+                event.preventDefault(); // Prevent the default link behavior if in iframe
+                // Send a message to the parent window
+                window.parent.postMessage('navigateHome', '*');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

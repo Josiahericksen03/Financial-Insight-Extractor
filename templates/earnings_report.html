@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings Report</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        header ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        header ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        header ul li a:hover {
+            background: lightgray;
+        }
+
+        .live-data{
+            text-align: center;
+            margin: 0px;
+            padding: 5px;
+            background: white;
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0 0 10px black;
+            height: 10%;
+        }
+        .live-data ul{
+            display: inline-block;
+            padding: 0;
+        }
+
+        .live-data li{
+            display: inline;
+            margin-right: 15px;
+        }
+
+        section {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: reow;
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container, .graph-container{
+            flex: 1;
+            padding: 10px;
+
+        }
+
+        /* .graph-container {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+
+        label, input, button {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        img {
+            max-width: 100%; 
+            height: auto;
+        }
+
+        h1{
+            color: white;
+        }
+        h2 {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Earnings Report</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </header>
+    
+        <div class="live-data">
+        <h2>Live Market Data</h1>
+        <ul>
+            {% for ticker, price in data.items() %}
+            <li>{{ ticker }}: {{ price }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+    <section>
+        <div class="graph-container">
+            {% if image %}
+                <img src="data:image/png;base64,{{image}}" alt="earnings graph">
+            {% else %}
+                <p>No graph available.</p>
+            {% endif %}
+        </div>
+        <div class="form-container">
+            <form method="post">
+                <label for="Q1">Q1:</label>
+                <input type="text" id="Q1" name="Q1" value="{{ request.form['Q1'] }}">
+                <label for="Q2">Q2:</label>
+                <input type="text" id="Q2" name="Q2" value="{{ request.form['Q2'] }}">
+                <label for="Q3">Q3:</label>
+                <input type="text" id="Q3" name="Q3" value="{{ request.form['Q3'] }}">
+                <label for="Q4">Q4:</label>
+                <input type="text" id="Q4" name="Q4" value="{{ request.form['Q4'] }}">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        header ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        header ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        header ul li a:hover {
+            background: lightgray;
+        }
+        .market-data-container {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .market-data-container h2 {
+            margin-top: 0;
+        }
+        .index-card {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .report-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #4CAF50; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #A9A9A9;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px 5px 0 0; /* Rounded corners for table headers */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+        }
+    </style>
+    <title>Quarterly Earnings Report</title>
+</head>
+<body>
+    <header>
+        <h1>Consolidated Balance Sheets</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/compare_pdf">Compare PDF</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </header>
+    <!-- Live Market Data Bar section -->
+    <div class="market-data-container">
+        <h2>Live Market Data</h2>
+        <div>
+            {% for name, value in live_market_data.items() %}
+            <div class="index-card"><strong>{{ name }}</strong>: {{ value }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <h2>Quarterly Earnings Report</h2>
+    <div class="report-container">   
+        <h2>{{ ticker_info.ticker }} Stock Information</h2>
+        <p>Current Price: {{ ticker_info.current_price }}</p>
+        <p>P/E Ratio: {{ ticker_info.pe_ratio }}</p>
+        <p>52-Week Change: {{ ticker_info.week_change }}</p>
+        <p>Earnings Growth: {{ ticker_info.earnings_growth }}</p>
+    </div>
+
+    <!-- Consolidated Balance Sheets table -->
+<div class="report-container">
+    <table>
+        <tr>
+            <th style="background-color: #337ab7;">Financial Metric</th>
+            <th style="background-color: #337ab7;">2022 (in million USD)</th>
+            <th style="background-color: #337ab7;">2023 (in million USD)</th>
+        </tr>
+        <tr>
+            <td>Total Current Assets</td>
+            <td>{{ data['total_current_assets']['2022']}}</td>
+            <td>{{ data['total_current_assets']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Assets</td>
+            <td>{{ data['total_assets']['2022'] }}</td>
+            <td>{{ data['total_assets']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Current Liabilities</td>
+            <td>{{ data['total_current_liabilities']['2022'] }}</td>
+            <td>{{ data['total_current_liabilities']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Stockholders' Equity</td>
+            <td>{{  data['total_stockholders_equity']['2022'] }}</td>
+            <td>{{  data['total_stockholders_equity']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Liabilities and Stockholders' Equity</td>
+            <td>{{ data['total_liabilities_and_stockholders_equity']['2022'] }}</td>
+            <td>{{ data['total_liabilities_and_stockholders_equity']['2023'] }}</td>
+        </tr>
+    </table>
+</div>
+
+   <!-- Consolidated Statements of Operations table -->
+<div class="report-container">
+    <h2>Consolidated Statements of Operations </h2>
+    <table>
+        <tr>
+            <th style="background-color: #ff0000;">Financial Metric</th>
+            <th style="background-color: #ff0000;">2022 (in million USD)</th>
+            <th style="background-color: #ff0000;">2023 (in million USD)</th>
+        </tr>
+        <tr>
+            <td>CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD</td>
+            <td>{{ data['cash_beginning']['2022'] }}</td>
+            <td>{{ data['cash_beginning']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Net income (loss)</td>
+            <td>{{ data['net_income']['2022'] }}</td>
+            <td>{{ data['net_income']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Net cash provided by (used in) operating activities</td>
+            <td>{{ data['net_operating_cash']['2022'] }}</td>
+            <td>{{ data['net_operating_cash']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Net cash used in investing activities</td>
+            <td>{{ data['net_investing_cash']['2022'] }}</td>
+            <td>{{ data['net_investing_cash']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Net cash provided by (used in) financing activities</td>
+            <td>{{ data['net_financing_cash']['2022'] }}</td>
+            <td>{{ data['net_financing_cash']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, END OF PERIOD</td>
+            <td>{{ data['cash_end']['2022'] }}</td>
+            <td>{{ data['cash_end']['2023'] }}</td>
+        </tr>
+    <table>
+</div>
+
+    </table>
+</div>
+
+    <!-- Consolidated Statements of Cash Flows table -->
+<div class="report-container">
+    <h2>Consolidated Statements of Cash Flows</h2>
+    <table>
+        <tr>
+            <th style="background-color: #f0ad4e;">Financial Metric</th>
+            <th style="background-color: #f0ad4e;">2022 (in million USD)</th>
+            <th style="background-color: #f0ad4e;">2023 (in million USD)</th>
+        </tr>
+        <tr>
+            <td>Total Net Sales</td>
+            <td>{{ data['total_net_sales']['2022'] }}</td>
+            <td>{{ data['total_net_sales']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Operating Expenses</td>
+            <td>{{ data['total_operating_expenses']['2022'] }}</td>
+            <td>{{ data['total_operating_expenses']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Net income (loss)</td>
+            <!-- td>{{ net_operating_cash_2022 }}</td -->
+            <td>{{ data['net_income']['2022'] }}</td>
+            <td>{{ data['net_income']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Weighted Average Shares Basic</td>
+            <td>{{ data['weighted_average_shares_basic']['2022'] }}</td>
+            <td>{{ data['weighted_average_shares_basic']['2023'] }}</td>
+        </tr>
+        <tr>
+            <td>Diluted Average Shares Basic</td>
+            <td>{{ data['diluted_average_shares_basic']['2022'] }}</td>
+            <td>{{ data['diluted_average_shares_basic']['2023'] }}</td>
+        </tr>
+    <table>
+        <div class="report-container">
+            <h2>Consolidating Balance Sheet</h2>
+            <img src="data:image/png;base64,{{ imageCBS }}" alt="Assets and Liabilities Graph">
+        </div>   
+        <div class="report-container">
+            <h2>Consolidated Statements of Operations Graph</h2>
+            <img src="data:image/png;base64,{{ imageCSO }}" alt="Operations Graph">
+        </div>     
+        <div class="report-container">
+            <h2>Consolidated Statements of Cash Flows</h2>
+            <img src="data:image/png;base64,{{ imageCSCF }}" alt="Financial Data Graph">
+        </div>        
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        header ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        header ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        header ul li a:hover {
+            background: lightgray;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2, p {
+            color: #333; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <ul>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </header>
+    <section>
+        <ul>
+            {% for user in users %}
+                <li>{{ user.username }} - {{ user.name }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>
